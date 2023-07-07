@@ -1,5 +1,4 @@
 import { useState, useReducer, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 // bootstrap components
 import Accordion from "react-bootstrap/Accordion";
@@ -26,6 +25,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BusinessAccList from "@/components/BusinessAccList";
 import SavingAccList from "@/components/SavingAccList";
+import DepositModal from "@/components/DepositModal";
+import TransferModal from "@/components/TransferModal";
+import WithdrawModal from "@/components/WithdrawModal";
 
 const addAccFormReducer = (state, event) => {
 	return {
@@ -36,7 +38,6 @@ const addAccFormReducer = (state, event) => {
 
 const dashboard = ({ user }) => {
 	const [addAccData, setAddAccData] = useReducer(addAccFormReducer, {});
-	const [errorMessage, setErrorMessage] = useState("");
 	const [businessAccounts, setBusinessAccounts] = useState([]);
 	const [savingAccounts, setSavingAccounts] = useState([]);
 
@@ -173,15 +174,9 @@ const dashboard = ({ user }) => {
 										</table>
 									</div>
 									<div className={styles.accounts_transaction_btn}>
-										<Button variant="success">
-											<i className="bi bi-box-arrow-in-down-right"></i> Deposit
-										</Button>
-										<Button variant="danger">
-											<i className="bi bi-arrow-left-right"></i> Transfer
-										</Button>
-										<Button variant="warning">
-											<i className="bi bi-box-arrow-up-right"></i> Withdraw
-										</Button>
+										<DepositModal />
+										<TransferModal />
+										<WithdrawModal />
 									</div>
 								</Accordion.Body>
 							</Accordion.Item>

@@ -1,6 +1,9 @@
-import styles from "../styles/Home.module.scss";
+import styles from "@/styles/Content.module.scss";
 import Accordion from "react-bootstrap/Accordion";
 import { dollarSign } from "@/utils/someFunc";
+import DepositModal from "@/components/DepositModal";
+import TransferModal from "@/components/TransferModal";
+import WithdrawModal from "@/components/WithdrawModal";
 
 const SavingAcc = ({ account }) => {
 	return (
@@ -32,6 +35,11 @@ const SavingAcc = ({ account }) => {
 							</tr>
 						</tbody>
 					</table>
+				</div>
+				<div className={styles.accounts_transaction_btn}>
+					<DepositModal />
+					<TransferModal />
+					<WithdrawModal />
 				</div>
 			</Accordion.Body>
 		</Accordion.Item>
