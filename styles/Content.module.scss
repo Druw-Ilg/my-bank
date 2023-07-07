@@ -1,0 +1,362 @@
+$primary-color: #0070f3;
+$secondary-color: #c74c4cee;
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem;
+
+	.logout {
+		padding-top: 0.8rem;
+		a {
+			padding: 0.6rem 1rem;
+			color: $secondary-color;
+			font-weight: 400;
+			font-size: 1.1rem;
+			border: 1px solid $secondary-color;
+			border-radius: 6px;
+			transition: background-color 0.7s ease;
+		}
+
+		a:hover {
+			cursor: pointer;
+			color: #fff;
+			background-color: $secondary-color;
+		}
+	}
+}
+@media (max-width: 590px) {
+	.header {
+		padding: 0.7rem;
+		.logout {
+			width: 40%;
+			a {
+				font-size: 0.7rem;
+				padding: 0.3rem 0.5rem;
+			}
+		}
+	}
+}
+
+.errorMessage {
+	text-align: center;
+	font-size: 0.9rem;
+	color: #fff;
+	background-color: rgb(236, 22, 22);
+	border-radius: 6px;
+}
+
+.successMessage {
+	text-align: center;
+	font-size: 0.9rem;
+	color: #fff;
+	background-color: rgba(98, 196, 74, 0.877);
+	border-radius: 6px;
+}
+
+//////////////////// Breadcrumb /////////////////////
+
+.nav_breadcrumb ol {
+	padding-left: 3rem;
+}
+
+.footer {
+	display: flex;
+	flex: 1;
+	padding: 2rem 0;
+	border-top: 1px solid #eaeaea;
+	justify-content: center;
+	align-items: center;
+	p {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-grow: 1;
+	}
+}
+
+.main {
+	min-height: 70vh;
+	padding: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.container {
+		margin-top: 3rem;
+		padding: 0 1rem;
+
+		.accountsOverview {
+			margin: 1rem 0;
+
+			.accounts_transaction_btn {
+				display: flex;
+				justify-content: space-around;
+
+				button {
+					padding: 7px 30px;
+				}
+			}
+		}
+
+		.grid {
+			max-width: 800px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+
+			//////////////// dashboard ///////////////
+
+			.dashboard_item {
+				color: #f2f2f2;
+				text-decoration: none;
+				margin: 1rem;
+				min-height: 6rem;
+				min-width: 13rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				font-size: 24px;
+				box-shadow: 3px 3px 3rem 3px rgb(0 0 0 / 20%);
+				border-radius: 3px;
+				transition: transform 0.2s, color 0.15s ease, border-color 0.15s ease;
+			}
+
+			.dashboard_item:hover {
+				transform: scale(1.1);
+			}
+
+			.dashboard_item:nth-child(1) {
+				background-color: #388538f6;
+			}
+			.dashboard_item:nth-child(2) {
+				background-color: #b13333f6;
+			}
+			.dashboard_item:nth-child(3) {
+				background-color: #4237d8f6;
+			}
+			.dashboard_item:nth-child(4) {
+				background-color: #beb318f6;
+			}
+
+			@media (max-width: 375px) {
+				.dashboard_item {
+					width: 100%;
+				}
+			}
+			////////////////// account  /////////////////////////
+			.account {
+				padding: 2rem;
+				min-width: 20rem;
+				display: flex;
+				flex-direction: column;
+				// font-size: 24px;
+				box-shadow: 3px 3px 3rem 3px rgb(0 0 0 / 20%);
+				border-radius: 3px;
+
+				.new_balance_form {
+					span {
+						display: flex;
+						flex-direction: column;
+						label {
+							line-height: 1.5;
+							font-size: 1.2rem;
+						}
+
+						input[type="number"] {
+							width: 100%;
+							border: none;
+							line-height: 1.5rem;
+							color: #222;
+							font-size: 1rem;
+							letter-spacing: 1px;
+							background-color: rgb(213, 215, 216);
+						}
+					}
+
+					button {
+						padding: 0.3rem 3rem;
+						margin: 0.5rem 0;
+						color: #f2f2f2;
+						font-weight: 500;
+						font-size: 1.1rem;
+						line-height: 1.5;
+						width: 100%;
+						border: none;
+						border-radius: 3px;
+						background-color: $primary-color;
+						transition: transform 0.2s;
+					}
+
+					button:hover {
+						cursor: pointer;
+						transform: scale(1.1);
+					}
+				}
+			}
+
+			/////////////////   Transactions /////////////////
+
+			.transactions table {
+				min-width: 700px;
+			}
+
+			@media (max-width: 375px) {
+				.transactions table {
+					min-width: 18rem;
+				}
+			}
+
+			//////////////// Services //////////////////////
+
+			.service {
+				color: #f2f2f2;
+				text-decoration: none;
+				margin: 1rem;
+				min-height: 13rem;
+				min-width: 13rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				font-size: 24px;
+				box-shadow: 3px 3px 3rem 3px rgb(0 0 0 / 20%);
+				border-radius: 100%;
+				transition: transform 0.2s, color 0.15s ease, border-color 0.15s ease;
+			}
+
+			.service:nth-child(1) {
+				background-color: #2da7aff6;
+			}
+			.service:nth-child(2) {
+				background-color: #5ebd32f6;
+			}
+			.service:nth-child(3) {
+				background-color: #5c56b1f6;
+			}
+
+			.service:hover {
+				transform: scale(1.1);
+				box-shadow: 6px 6px 5rem 8px rgb(0 0 0 / 30%);
+			}
+
+			@media (max-width: 375px) {
+				.service {
+					min-width: 10rem;
+					min-height: 10rem;
+					font-size: 20px;
+				}
+			}
+
+			///////////// Profile /////////////////
+
+			.profileInfo {
+				padding: 6px 23px;
+				border-radius: 6px;
+				transition: transform 0.7s, color 0.15s ease, border-color 0.15s ease;
+				.profileField {
+					display: flex;
+
+					span {
+						display: flex;
+						flex-direction: column;
+						margin: 10px 16px;
+						font-size: 18px;
+
+						label {
+							margin-bottom: 6px;
+						}
+					}
+					input[type="text"],
+					input[type="password"] {
+						color: #000;
+						background-color: rgb(233, 237, 241);
+						outline: none;
+						border: none;
+					}
+				}
+
+				.changePassBtn {
+					padding: 0.3rem 0.7rem;
+					margin: 0.5rem 0.7rem;
+					color: #f3f3f3;
+					font-weight: 500;
+					font-size: 0.9rem;
+					line-height: 1.5;
+					max-width: 40%;
+					border: none;
+					border-radius: 3px;
+					background-color: #0070f3;
+					transition: color 0.7s;
+				}
+
+				.changePassBtn:hover {
+					cursor: pointer;
+					color: #030303;
+				}
+			}
+
+			.profileInfo:hover {
+				transform: scale(1.1);
+				box-shadow: 6px 6px 5rem 6px rgb(0 0 0 / 25%);
+			}
+
+			@media (max-width: 590px) {
+				.profileInfo {
+					.profileField {
+						flex-direction: column;
+						span {
+							font-size: 12px;
+						}
+					}
+					button {
+						padding: 0.3rem 0.3rem;
+						line-height: 1;
+						max-width: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Offcanvas
+.addAccountForm {
+	padding: 0 10px 20px 10px;
+	background-color: #f3f2fde8;
+	box-shadow: 3px 3px 3rem 3px rgba(0, 0, 0, 0.2);
+
+	.addAccountForm_opts {
+		margin: 0;
+		display: flex;
+		justify-content: space-between;
+		background-color: #d3d3d3;
+
+		.addAccountForm_input {
+			input[type="radio"] {
+				display: none;
+			}
+
+			label {
+				padding: 7px 17px;
+				font-weight: 600;
+				cursor: pointer;
+			}
+		}
+	}
+	.addAccountForm_input {
+		input[type="text"] {
+			width: 100%;
+			margin-bottom: 1rem;
+			border: none;
+			line-height: 1.5rem;
+			color: #222;
+			font-size: 1rem;
+			letter-spacing: 1px;
+			background-color: rgb(213, 215, 216);
+		}
+	}
+}

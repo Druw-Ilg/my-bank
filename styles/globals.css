@@ -1,0 +1,33 @@
+/* @font-face {
+	font-family: "font1";
+	src: url("../utils/fonts/OpenSans-VariableFont_wdthwght.ttf")
+		format("truetype");
+} */
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Oxygen, Roboto, BlinkMacSystemFont, "Segoe UI", Ubuntu,
+		"Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	/* background-image: url("../public/banks1.jpg"); */
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		color-scheme: dark;
+	}
+	body {
+		color: black;
+		background: white;
+	}
+}

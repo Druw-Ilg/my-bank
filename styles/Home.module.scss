@@ -1,0 +1,145 @@
+$primary-color: #0070f3;
+
+.main {
+	min-height: 100vh;
+	padding: 4rem 0;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer {
+	display: flex;
+	flex: 1;
+	padding: 2rem 0;
+	border-top: 1px solid #eaeaea;
+	justify-content: center;
+	align-items: center;
+	p {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-grow: 1;
+	}
+}
+
+.title a,
+.logo {
+	color: $primary-color;
+	text-decoration: none;
+}
+
+.title a:hover,
+.title a:focus,
+.title a:active,
+.logo:hover,
+.logo:focus,
+.logo:active {
+	text-decoration: underline;
+}
+
+.title {
+	margin: 0;
+	line-height: 1.15;
+	font-size: 4rem;
+	text-align: center;
+}
+
+.form {
+	margin: 3rem 0;
+	min-width: 25rem;
+	padding: 2rem 3rem;
+	background-color: #f3f2fde8;
+	box-shadow: 3px 3px 3rem 3px rgba(0, 0, 0, 0.2);
+	border-radius: 7px;
+
+	.form_title {
+		margin: 0;
+		font-size: 2rem;
+		font-weight: 500;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		margin: 1rem 0;
+
+		label {
+			line-height: 1.5;
+			font-size: 1.2rem;
+		}
+
+		input {
+			width: 100%;
+			border: none;
+			line-height: 1.5rem;
+			color: #222;
+			font-size: 1rem;
+			letter-spacing: 1px;
+			background-color: rgb(213, 215, 216);
+		}
+
+		.deposit_price_range {
+			font-size: 0.9rem;
+			margin-left: 0.2rem;
+		}
+	}
+
+	button {
+		padding: 0.3rem 3rem;
+		margin: 0.5rem 0;
+		color: #000;
+		font-weight: 500;
+		font-size: 1.1rem;
+		line-height: 1.5;
+		width: 100%;
+		border: none;
+		border-radius: 3px;
+		background-color: #0070f3;
+		transition: transform 0.2s;
+	}
+
+	button:hover {
+		cursor: pointer;
+		transform: scale(1.1);
+	}
+
+	.create_account {
+		span {
+			cursor: pointer;
+			transition: transform 0.2s;
+			color: #0070f3;
+		}
+
+		span:hover {
+			font-weight: bold;
+
+			text-decoration: underline;
+		}
+	}
+
+	.errorMessage {
+		text-align: center;
+		font-size: 1.1rem;
+		color: #fff;
+		background-color: rgb(236, 22, 22);
+		border-radius: 1.1rem;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.card,
+	.footer {
+		border-color: #222;
+	}
+	.code {
+		background: #111;
+	}
+	.logo img {
+		filter: invert(1);
+	}
+}
