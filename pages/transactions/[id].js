@@ -1,11 +1,35 @@
+import { useState, useEffect } from "react";
+import Table from "react-bootstrap/Table";
+
 import { server } from "@/utils/server";
 import Link from "next/link";
 import Heads from "@/components/Heads";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Transactions from "@/components/Transactions";
 import styles from "@/styles/Content.module.scss";
+import { getTransactions } from "@/api/operations";
+import { dollarSign, alert } from "@/utils/someFunc";
 
 const transactions = ({ user }) => {
+	const [transactions, setTransactions] = useState([]);
+
+	let transactionsList = [];
+
+	// will store error message if there is no transactions
+	const [noTransactions, setNoTransactions] = useState("");
+
+	useEffect(() => {
+		getTransactions(user._id).then((res) => {
+			if (res.status === 200) {
+				setTransactions(res.data);
+				// setTransactions(res);
+			} else {
+				setNoTransactions(res.message);
+			}
+		});
+	}, []);
+
 	return (
 		<>
 			<Heads />
@@ -26,54 +50,29 @@ const transactions = ({ user }) => {
 				<div className={styles.container}>
 					<div className={styles.grid}>
 						<div className={styles.transactions}>
-							{/* Information must come from server */}
-
-							<table className="table table-striped table-hover table-responsive">
-								<thead className="thead-dark">
-									<tr>
-										<th>Service</th>
-										<th>Date</th>
-										<th>Amount</th>
-										<th>balance</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Movilib</td>
-										<td>12/05/22</td>
-										<td>$25</td>
-										<td>$100</td>
-									</tr>
-									<tr>
-										<td>Movilib</td>
-										<td>12/05/22</td>
-										<td>$25</td>
-										<td>$100</td>
-									</tr>
-									<tr>
-										<td>Movilib</td>
-										<td>12/05/22</td>
-										<td>$25</td>
-										<td>$100</td>
-									</tr>
-									<tr>
-										<td>Clinic</td>
-										<td>18/05/22</td>
-										<td>$40</td>
-										<td>$75</td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr>
-										{/* Should display the total balance from the server */}
-										<td></td>
-										<td></td>
-										<td></td>
-										<td>$5000</td>
-									</tr>
-								</tfoot>
-							</table>
+							{transactions.length < 1 ? (
+								alert("danger", noTransactions)
+							) : (
+								<Table striped responsive hover>
+									<thead>
+										<tr>
+											<th>Account Name</th>
+											<th>Account Number</th>
+											<th>Account Type</th>
+											<th>Amount</th>
+											<th>Status</th>
+											<th>Description</th>
+											<th>Date</th>
+											<th>balance</th>
+										</tr>
+									</thead>
+									<tbody>
+										<Transactions transactions={transactions} />
+									</tbody>
+								</Table>
+							)}
 						</div>
+						"{" "}
 					</div>
 				</div>
 			</div>

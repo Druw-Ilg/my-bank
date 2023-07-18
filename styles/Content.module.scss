@@ -156,57 +156,19 @@ $secondary-color: #c74c4cee;
 				// font-size: 24px;
 				box-shadow: 3px 3px 3rem 3px rgb(0 0 0 / 20%);
 				border-radius: 3px;
-
-				.new_balance_form {
-					span {
-						display: flex;
-						flex-direction: column;
-						label {
-							line-height: 1.5;
-							font-size: 1.2rem;
-						}
-
-						input[type="number"] {
-							width: 100%;
-							border: none;
-							line-height: 1.5rem;
-							color: #222;
-							font-size: 1rem;
-							letter-spacing: 1px;
-							background-color: rgb(213, 215, 216);
-						}
-					}
-
-					button {
-						padding: 0.3rem 3rem;
-						margin: 0.5rem 0;
-						color: #f2f2f2;
-						font-weight: 500;
-						font-size: 1.1rem;
-						line-height: 1.5;
-						width: 100%;
-						border: none;
-						border-radius: 3px;
-						background-color: $primary-color;
-						transition: transform 0.2s;
-					}
-
-					button:hover {
-						cursor: pointer;
-						transform: scale(1.1);
-					}
-				}
 			}
 
 			/////////////////   Transactions /////////////////
 
-			.transactions table {
-				min-width: 700px;
+			.transactions {
+				max-width: 800px;
+				max-height: 100vh;
+				overflow: auto;
 			}
 
-			@media (max-width: 375px) {
-				.transactions table {
-					min-width: 18rem;
+			@media (max-width: 695px) {
+				.transactions {
+					max-width: 320px;
 				}
 			}
 
@@ -319,6 +281,49 @@ $secondary-color: #c74c4cee;
 					}
 				}
 			}
+		}
+	}
+}
+
+// Modals
+
+// deposit & transfer form:
+#modal_deposit_form,
+#modal_transfer_form {
+	.current_balance {
+		font-size: medium;
+		font-weight: 600;
+		padding: 0 20px;
+	}
+	.deposit_form,
+	.transfer_form {
+		.modal_info {
+			font-size: small;
+			color: #222;
+		}
+		span {
+			display: flex;
+			flex-direction: column;
+			label {
+				line-height: 1.5;
+				font-size: 1.2rem;
+			}
+
+			input {
+				width: 100%;
+				border: none;
+				line-height: 1.5rem;
+				color: #222;
+				font-size: 1rem;
+				letter-spacing: 1px;
+				background-color: rgb(213, 215, 216);
+			}
+		}
+
+		button {
+			font-weight: 500;
+			font-size: 1.1rem;
+			line-height: 1.5;
 		}
 	}
 }

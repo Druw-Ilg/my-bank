@@ -27,14 +27,23 @@ import BusinessAccList from "@/components/BusinessAccList";
 import SavingAccList from "@/components/SavingAccList";
 import DepositModal from "@/components/DepositModal";
 import TransferModal from "@/components/TransferModal";
-import WithdrawModal from "@/components/WithdrawModal";
+import Payments from "@/components/PaymentsModal";
 
+// form reducer for add account form. It gathers all form data
 const addAccFormReducer = (state, event) => {
 	return {
 		...state,
 		[event.target.name]: event.target.value,
 	};
 };
+
+// fetch user's accounts
+// const getUserAccounts = async (id) => {
+
+// 	const endpoint = await fetch(`${server}/api/user/handle-accounts/${id}`);
+// 	const userAccounts = await endpoint.json();
+// 	return userAccounts;
+// };
 
 const dashboard = ({ user }) => {
 	const [addAccData, setAddAccData] = useReducer(addAccFormReducer, {});
@@ -45,11 +54,11 @@ const dashboard = ({ user }) => {
 	const closeAccForm = () => setAcc(false);
 	const accForm = () => setAcc(true);
 
-	const router = useRouter();
 	// router to refresh the page on demand
 
-	const loadDashboard = (id) => {
-		const userId = id.toString();
+	const router = useRouter();
+
+	const loadDashboard = () => {
 		router.push(`${server}/dashboard/${user._id}`);
 	};
 
@@ -128,6 +137,19 @@ const dashboard = ({ user }) => {
 		setDescription("Enter the account name");
 	};
 
+	const handleComponentReturn = (status, message) => {
+		if (status < 300) {
+			message
+				? toastSuccess(message)
+				: toastSuccess("Successfull transaction.");
+			loadDashboard();
+			fetchBusinesses();
+			fetchSavingAcc();
+		} else {
+			message ? toastError(message) : toastError("Transaction Failed!");
+		}
+	};
+
 	return (
 		<>
 			<Heads />
@@ -174,17 +196,48 @@ const dashboard = ({ user }) => {
 										</table>
 									</div>
 									<div className={styles.accounts_transaction_btn}>
-										<DepositModal />
-										<TransferModal />
-										<WithdrawModal />
+										<DepositModal
+											acc_name={"Check account"}
+											acc_number={user.acc_num}
+											balance={user.balance}
+											document={"user_doc"}
+											userId={user._id}
+										/>
+										<TransferModal
+											acc_name={"Check account"}
+											acc_number={user.acc_num}
+											donorBalance={user.balance}
+											document={"user_doc"}
+											userId={user._id}
+											savingAccounts={savingAccounts}
+											businessAccounts={businessAccounts}
+											handleComponentReturn={handleComponentReturn}
+										/>
+										<Payments
+											acc_name={"Check account"}
+											acc_number={user.acc_num}
+											balance={user.balance}
+											document={"user_doc"}
+											userId={user._id}
+										/>
 									</div>
 								</Accordion.Body>
 							</Accordion.Item>
 
 							{user.business_acc && (
-								<BusinessAccList accounts={businessAccounts} />
+								<BusinessAccList
+									accounts={businessAccounts}
+									savingAccounts={savingAccounts}
+									handleComponentReturn={handleComponentReturn}
+								/>
 							)}
-							{user.saving_acc && <SavingAccList accounts={savingAccounts} />}
+							{user.saving_acc && (
+								<SavingAccList
+									accounts={savingAccounts}
+									businessAccounts={businessAccounts}
+									handleComponentReturn={handleComponentReturn}
+								/>
+							)}
 						</Accordion>
 					</div>
 					<div className={styles.grid}>
@@ -313,6 +366,8 @@ export const getStaticProps = async ({ params }) => {
 	const res = await fetch(`${server}/api/user/${params.id}`);
 	const user = await res.json();
 
+	// fetch user's accounts
+	// const accounts = userAccounts(params.id);
 	return {
 		props: { user },
 	};

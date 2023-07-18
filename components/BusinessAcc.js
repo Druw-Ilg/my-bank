@@ -5,7 +5,12 @@ import DepositModal from "@/components/DepositModal";
 import TransferModal from "@/components/TransferModal";
 import WithdrawModal from "@/components/WithdrawModal";
 
-const BusinessAcc = ({ account }) => {
+const BusinessAcc = ({
+	account,
+	savingAccounts,
+	businessAccounts,
+	handleComponentReturn,
+}) => {
 	return (
 		<Accordion.Item eventKey={account._id}>
 			<Accordion.Header>{account.business_name}</Accordion.Header>
@@ -37,9 +42,30 @@ const BusinessAcc = ({ account }) => {
 					</table>
 				</div>
 				<div className={styles.accounts_transaction_btn}>
-					<DepositModal />
-					<TransferModal />
-					<WithdrawModal />
+					<DepositModal
+						acc_name={account.business_name}
+						acc_number={account.acc_number}
+						balance={account.balance}
+						document={"business_doc"}
+						userId={account.user_id}
+					/>
+					<TransferModal
+						acc_name={account.business_name}
+						acc_number={account.acc_number}
+						donorBalance={account.balance}
+						document={"business_doc"}
+						userId={account.user_id}
+						savingAccounts={savingAccounts}
+						businessAccounts={businessAccounts}
+						handleComponentReturn={handleComponentReturn}
+					/>
+					<WithdrawModal
+						acc_name={account.business_name}
+						acc_number={account.acc_number}
+						balance={account.balance}
+						document={"business_doc"}
+						userId={account.user_id}
+					/>
 				</div>
 			</Accordion.Body>
 		</Accordion.Item>

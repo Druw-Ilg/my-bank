@@ -1,6 +1,10 @@
 import BusinessAcc from "@/components/BusinessAcc";
 
-const BusinessAccList = ({ accounts }) => {
+const BusinessAccList = ({
+	accounts,
+	savingAccounts,
+	handleComponentReturn,
+}) => {
 	// insert accounts in an array to map them easily
 
 	const accountList = [];
@@ -16,7 +20,13 @@ const BusinessAccList = ({ accounts }) => {
 	return (
 		<>
 			{accountList.map((account) => (
-				<BusinessAcc key={account._id} account={account} />
+				<BusinessAcc
+					key={account._id}
+					account={account}
+					savingAccounts={savingAccounts}
+					businessAccounts={accounts}
+					handleComponentReturn={handleComponentReturn}
+				/>
 			))}
 		</>
 	);

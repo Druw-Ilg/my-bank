@@ -61,13 +61,10 @@ export default async function handler(req, res, next) {
 				}
 			} else if (field === "balance") {
 				try {
-					const { id, balance } = body;
+					const { acc_number, balance } = body;
 					const data = await db
 						.collection("users")
-						.updateOne(
-							{ _id: new ObjectId(id) },
-							{ $set: { balance: balance } }
-						);
+						.updateOne({ acc_num: acc_number }, { $set: { balance: balance } });
 					res.json({ status: 201, message: "Deposit made successfully!" });
 				} catch (e) {
 					res.json({
@@ -77,6 +74,7 @@ export default async function handler(req, res, next) {
 					});
 				}
 			} else if (field === "business_acc") {
+				// set business_acc to true. Meaning the user has a business account
 				try {
 					const { id, enable_business_acc } = body;
 					const data = await db
@@ -92,6 +90,7 @@ export default async function handler(req, res, next) {
 					});
 				}
 			} else if (field === "saving_acc") {
+				// set saving_acc to true. Meaning the user has a saving account
 				try {
 					const { id, enable_saving_acc } = body;
 					const data = await db

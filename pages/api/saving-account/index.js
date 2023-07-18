@@ -54,11 +54,14 @@ export default async function handler(req, res, next) {
 			// check if the user wish to change his/her balance
 			if (field === "balance") {
 				try {
-					const { user_id, newbalance } = body;
+					const { acc_number, balance } = body;
 					const data = await db
 						.collection("saving_acc")
-						.updateOne({ user_id: user_id }, { $set: { balance: newbalance } });
-					res.json({ status: 201, message: "balance changed successfully!" });
+						.updateOne(
+							{ acc_number: acc_number },
+							{ $set: { balance: balance } }
+						);
+					res.json({ status: 201, message: "Deposit made successfully!" });
 				} catch (e) {
 					res.json({
 						status: 500,

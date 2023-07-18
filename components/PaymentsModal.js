@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function WithdrawModal() {
+function PaymentsModal() {
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
@@ -11,12 +11,12 @@ function WithdrawModal() {
 	return (
 		<>
 			<Button variant="warning" onClick={handleShow}>
-				<i className="bi bi-box-arrow-up-right"></i> Withdraw
+				<i className="bi bi-box-arrow-up-right"></i> Payments
 			</Button>
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Withdraw</Modal.Title>
+					<Modal.Title>Payments</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
 				<Modal.Footer>
@@ -32,4 +32,4 @@ function WithdrawModal() {
 	);
 }
 
-export default WithdrawModal;
+export default PaymentsModal;

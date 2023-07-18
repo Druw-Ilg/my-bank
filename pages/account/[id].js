@@ -18,45 +18,6 @@ const mortgageReducer = (state, event) => {
 const account = ({ user }) => {
 	const [mortgageData, setMortgageData] = useReducer(mortgageReducer, {});
 	const [mortgage, setMortgage] = useState();
-	const [deposit, setDeposit] = useState();
-	const [successDeposit, setSuccessDeposit] = useState("");
-	const [errorDeposit, setErorrDeposit] = useState("");
-	const router = useRouter();
-
-	// function to refresh the page
-	const refreshPage = () => {
-		router.replace(router.asPath);
-	};
-
-	const new_balance_form = async (e) => {
-		e.preventDefault();
-
-		//save the deposit
-		const balance = parseInt(user.balance) + parseInt(deposit);
-		const jsonData = JSON.stringify({
-			id: user._id,
-			balance: balance,
-			field: "balance",
-		});
-		const endpoint = "../api/user";
-		const options = {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: jsonData,
-		};
-		const makeDeposit = await fetch(endpoint, options);
-		const res = await makeDeposit.json();
-		if (res.status == 201) {
-			setErorrDeposit("");
-			refreshPage();
-			setSuccessDeposit(res.message);
-		} else {
-			setSuccessDeposit("");
-			setErorrDeposit(res.message);
-		}
-	};
 
 	// calculate mortgage
 	const calculateMortgage = (e) => {
@@ -94,32 +55,6 @@ const account = ({ user }) => {
 				<div className={styles.container}>
 					<div className={styles.grid}>
 						<div className={styles.account}>
-							<div className={styles.balance}>
-								<h4 className={styles.current_balance}>
-									Balance: $<span>{user.balance}</span>
-								</h4>
-								<p className={styles.successMessage}>{successDeposit}</p>
-								<p className={styles.errorMessage}>{errorDeposit}</p>
-
-								<form
-									className={styles.new_balance_form}
-									onSubmit={new_balance_form}
-								>
-									<span>
-										<label>Make a deposit: </label>
-										<input
-											type="number"
-											min="10"
-											max="1000000"
-											required
-											onChange={(e) => {
-												setDeposit(e.target.value);
-											}}
-										/>
-									</span>
-									<button>Deposit</button>
-								</form>
-							</div>
 							<div className={styles.loans}>
 								<h3>Loans &amp; Mortgage</h3>
 								<h5>
