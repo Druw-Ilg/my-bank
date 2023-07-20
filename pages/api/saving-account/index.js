@@ -51,7 +51,7 @@ export default async function handler(req, res, next) {
 
 		case "PATCH":
 			const field = body.field.toString();
-			// check if the user wish to change his/her balance
+			// check if it's a request for balance update
 			if (field === "balance") {
 				try {
 					const { acc_number, balance } = body;
@@ -61,7 +61,7 @@ export default async function handler(req, res, next) {
 							{ acc_number: acc_number },
 							{ $set: { balance: balance } }
 						);
-					res.json({ status: 201, message: "Deposit made successfully!" });
+					res.json({ status: 202, message: "Deposit made successfully!" });
 				} catch (e) {
 					res.json({
 						status: 500,

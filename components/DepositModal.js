@@ -105,7 +105,7 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 				</Modal.Header>
 				<div id={styles.modal_deposit_form}>
 					<h4 className={styles.current_balance}>
-						Balance: $<span>{balance}</span>
+						Balance: <span>{dollarSign(balance)}</span>
 					</h4>
 
 					<form className={styles.deposit_form} onSubmit={handleDeposit}>

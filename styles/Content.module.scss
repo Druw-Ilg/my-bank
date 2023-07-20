@@ -289,14 +289,16 @@ $secondary-color: #c74c4cee;
 
 // deposit & transfer form:
 #modal_deposit_form,
-#modal_transfer_form {
+#modal_transfer_form,
+#modal_payments_form {
 	.current_balance {
 		font-size: medium;
 		font-weight: 600;
 		padding: 0 20px;
 	}
 	.deposit_form,
-	.transfer_form {
+	.transfer_form,
+	.payments_form {
 		.modal_info {
 			font-size: small;
 			color: #222;

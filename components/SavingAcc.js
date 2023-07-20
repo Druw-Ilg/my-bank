@@ -3,7 +3,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { dollarSign } from "@/utils/someFunc";
 import DepositModal from "@/components/DepositModal";
 import TransferModal from "@/components/TransferModal";
-import WithdrawModal from "@/components/WithdrawModal";
+import Payments from "@/components/PaymentsModal";
 
 const SavingAcc = ({
 	account,
@@ -59,12 +59,13 @@ const SavingAcc = ({
 						businessAccounts={businessAccounts}
 						handleComponentReturn={handleComponentReturn}
 					/>
-					<WithdrawModal
+					<Payments
 						acc_name={account.acc_name}
 						acc_number={account.acc_number}
 						balance={account.balance}
 						document={"saving_doc"}
 						userId={account.user_id}
+						handleComponentReturn={handleComponentReturn}
 					/>
 				</div>
 			</Accordion.Body>

@@ -1,4 +1,4 @@
-// Get all user's accounts
+// Get all accounts that belong to a specific user
 
 import clientPromise from "@/utils/db/mongodb";
 import { ObjectId } from "mongodb";

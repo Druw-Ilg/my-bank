@@ -293,3 +293,194 @@ export async function transferFund(
 		return error.message;
 	}
 }
+
+// make a payment from a user to another
+
+export async function payment(
+	acc_number,
+	payerBalance,
+	beneficiary_accNumber,
+	amount,
+	reference,
+	document
+) {
+	try {
+		// First, let's try to locate the beneficiary account
+		let paymentResponse, paymentRequest, paymentResponseToJson, patchOptions;
+
+		// check if account is in user collection
+
+		let accountRequest = await fetch(
+			`${server}/api/user/handle-accounts/getByAccNumber/${beneficiary_accNumber}`
+		);
+		let accountResponse = await accountRequest.json();
+
+		if (accountResponse.status === 200) {
+			// beneficiary is a check account
+			// get balance then proceed to payment
+
+			const { _id, balance } = accountResponse.data;
+
+			patchOptions = {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					acc_number: beneficiary_accNumber,
+					balance: parseInt(amount) + parseInt(balance),
+					field: "balance",
+				}),
+			};
+
+			paymentRequest = await fetch(`${server}/api/user`, patchOptions);
+			paymentResponseToJson = await paymentRequest.json();
+
+			paymentResponse = {
+				status: paymentResponseToJson.status,
+				beneficiary_id: _id,
+			};
+			// /* paymentResponse will return with a status code of 202
+			//  * if the payment was successfull
+			//  * if it doesn't. ...
+			//  */
+		} else {
+			// check if account is in business collection
+
+			accountRequest = await fetch(
+				`${server}/api/business-account/${beneficiary_accNumber}`
+			);
+			accountResponse = await accountRequest.json();
+
+			if (accountResponse.status === 200) {
+				// beneficiary is a business account
+				// get balance then proceed to payment
+
+				const { user_id, balance } = accountResponse.data;
+
+				patchOptions = {
+					method: "PATCH",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						acc_number: beneficiary_accNumber,
+						balance: parseInt(amount) + parseInt(balance),
+						field: "balance",
+					}),
+				};
+
+				paymentRequest = await fetch(
+					`${server}/api/business-account`,
+					patchOptions
+				);
+				paymentResponseToJson = await paymentRequest.json();
+
+				paymentResponse = {
+					status: paymentResponseToJson.status,
+					beneficiary_id: user_id,
+				};
+			} else {
+				// check if account is in saving collection
+
+				accountRequest = await fetch(
+					`${server}/api/user/handle-accounts/getByAccNumber/${beneficiary_accNumber}`
+				);
+				accountResponse = await accountRequest.json();
+
+				if (accountResponse.status === 200) {
+					// beneficiary is a saving account
+					// get balance then proceed to payment
+
+					const { user_id, balance } = accountResponse.data;
+
+					patchOptions = {
+						method: "PATCH",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							acc_number: beneficiary_accNumber,
+							balance: parseInt(amount) + parseInt(balance),
+							field: "balance",
+						}),
+					};
+
+					paymentRequest = await fetch(
+						`${server}/api/saving-account`,
+						patchOptions
+					);
+					paymentResponseToJson = await paymentRequest.json();
+
+					paymentResponse = {
+						status: paymentResponseToJson.status,
+						beneficiary_id: user_id,
+					};
+				}
+			}
+		}
+
+		if (paymentResponse) {
+			// let's deduct the fund from payer account
+			const payerAPI =
+				document === "saving_doc"
+					? "saving-account"
+					: document === "business_doc"
+					? "business-account"
+					: "user";
+
+			const payerEndpoint = `${server}/api/${payerAPI}`;
+			const payerOptions = {
+				method: "PATCH",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					acc_number: acc_number,
+					balance: payerBalance,
+					field: "balance",
+				}),
+			};
+
+			const payerRequest = await fetch(payerEndpoint, payerOptions);
+			const payerResponse = await payerRequest.json();
+
+			const res = {
+				status: payerResponse.status,
+				beneficiary_id: paymentResponse.beneficiary_id,
+			};
+			return res;
+		} else {
+			return paymentResponse;
+		}
+	} catch (error) {
+		return error.message;
+	}
+}
+
+// post payment
+
+export async function postPayment(
+	payerId,
+	acc_name,
+	beneficiary_id,
+	beneficiaryName,
+	amount,
+	PaymentStatus,
+	reference
+) {
+	const jsonData = JSON.stringify({
+		payerId: payerId,
+		payerName: acc_name,
+		beneficiary_id: beneficiary_id,
+		beneficiaryName: beneficiaryName,
+		amount: amount,
+		paymentStatus: PaymentStatus,
+		reference: reference,
+		created: today(),
+	});
+
+	const paymentRequest = await fetch(`${server}/api/payments`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: jsonData,
+	});
+
+	const result = await paymentRequest.json();
+
+	return result;
+}

@@ -41,7 +41,7 @@ export default async function handler(req, res, next) {
 
 		case "PATCH":
 			field = body.field.toString();
-			// check if the user wish to change his/her password
+			// check if it's a request for balance update
 			if (field === "password") {
 				try {
 					const { id, newPassword } = body;
@@ -65,7 +65,7 @@ export default async function handler(req, res, next) {
 					const data = await db
 						.collection("users")
 						.updateOne({ acc_num: acc_number }, { $set: { balance: balance } });
-					res.json({ status: 201, message: "Deposit made successfully!" });
+					res.json({ status: 202, message: "Deposit made successfully!" });
 				} catch (e) {
 					res.json({
 						status: 500,

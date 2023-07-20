@@ -5,9 +5,8 @@ import { useRouter } from "next/router";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "@/styles/Content.module.scss";
-import { postTransaction } from "@/api/operations";
+import { postTransaction, transferFund } from "@/api/operations";
 import { dollarSign, alert } from "@/utils/someFunc";
-import { transferFund } from "@/api/operations";
 
 const getUserWithAccounts = async (id) => {
 	// fetch user's data including accounts

@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
 	let accNumber;
 	req.query
-		? (accNumber = req.query.id)
+		? (accNumber = req.query.accNumber)
 		: res.json({ status: 404, message: "Incorrect account number" });
 
 	try {
