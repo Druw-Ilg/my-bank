@@ -9,6 +9,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import styles from "@/styles/Content.module.scss";
 import Payments from "@/components/Payments";
+import { alert } from "@/utils/someFunc";
+
+// Mortgage Calculator will be implemented later on
 
 // const mortgageReducer = (state, event) => {
 // 	return {
@@ -48,7 +51,7 @@ const payments = ({ user, payments }) => {
 						<a href={"/dashboard/" + user._id.toString()}>Dashboard</a>
 					</li>
 					<li className="breadcrumb-item active" aria-current="page">
-						bank account
+						Payments
 					</li>
 				</ol>
 			</nav>
@@ -58,7 +61,7 @@ const payments = ({ user, payments }) => {
 					<div className={styles.grid}>
 						<div className={styles.account}>
 							{payments.length < 1 ? (
-								alert("danger", noPayments)
+								alert("danger", "No payments available for the moment.")
 							) : (
 								<Table striped responsive hover>
 									<thead>

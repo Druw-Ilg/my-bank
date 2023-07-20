@@ -84,7 +84,6 @@ function PaymentsModal({
 		} else {
 			setErrorAmount(true);
 		}
-		// console.log();
 	};
 
 	return (

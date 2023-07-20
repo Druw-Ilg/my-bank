@@ -72,7 +72,6 @@ const transactions = ({ user }) => {
 								</Table>
 							)}
 						</div>
-						"{" "}
 					</div>
 				</div>
 			</div>

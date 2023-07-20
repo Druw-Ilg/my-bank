@@ -55,7 +55,6 @@ const profile = ({ user }) => {
 	const router = useRouter();
 
 	// fetch business & saving accounts
-
 	async function fetchBusinesses() {
 		if (user.business_acc) {
 			getBusinesses(user._id).then((data) => setBusinessAccounts(data));
@@ -121,17 +120,6 @@ const profile = ({ user }) => {
 		}
 	};
 
-	// generate an alert meassage if there is
-	// no business or saving account to display
-
-	const isAcc = () => {
-		if (!user.business_acc && !user.saving_acc) {
-			const variant = "danger";
-			const message = "No accounts available.";
-			return <tr Collapse="5"> alert(variant, message)</tr>;
-		}
-	};
-
 	// callback function to receive data from child component
 	const handleActionFromChild = (data) => {
 		// setActionFromChild(data);
@@ -170,32 +158,36 @@ const profile = ({ user }) => {
 								<Card>
 									<Card.Header>Your Accounts</Card.Header>
 									<Card.Body>
-										<table className="table table-striped table-hover table-responsive">
-											<tbody>
-												<tr>
-													<th scope="col">Account Type</th>
-													<th scope="col">Name</th>
-													<th scope="col">Balance</th>
-													<th scope="col">Date Creation</th>
-													<th scope="col">Actions</th>
-												</tr>
-												{isAcc()}
-												{businessAccounts.map((account) => (
-													<ProBssAcc
-														key={account._id}
-														account={account}
-														onDatataGenerated={handleActionFromChild}
-													/>
-												))}
-												{savingAccounts.map((account) => (
-													<ProSvgAcc
-														key={account._id}
-														account={account}
-														onDatataGenerated={handleActionFromChild}
-													/>
-												))}
-											</tbody>
-										</table>
+										{businessAccounts.length > 0 ||
+										savingAccounts.length > 0 ? (
+											<table className="table table-striped table-hover table-responsive">
+												<tbody>
+													<tr>
+														<th scope="col">Account Type</th>
+														<th scope="col">Name</th>
+														<th scope="col">Balance</th>
+														<th scope="col">Date Creation</th>
+														<th scope="col">Actions</th>
+													</tr>
+													{businessAccounts.map((account) => (
+														<ProBssAcc
+															key={account._id}
+															account={account}
+															onDatataGenerated={handleActionFromChild}
+														/>
+													))}
+													{savingAccounts.map((account) => (
+														<ProSvgAcc
+															key={account._id}
+															account={account}
+															onDatataGenerated={handleActionFromChild}
+														/>
+													))}
+												</tbody>
+											</table>
+										) : (
+											alert("danger", "No accounts available for the moment.")
+										)}
 									</Card.Body>
 								</Card>
 							</div>
