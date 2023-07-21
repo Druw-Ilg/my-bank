@@ -38,9 +38,18 @@ const transactions = ({ user }) => {
 			<nav aria-label="breadcrumb" className={styles.nav_breadcrumb}>
 				<ol className="breadcrumb">
 					<li className="breadcrumb-item">
-						<a href={"/dashboard/" + user._id.toString()}>Dashboard</a>
+						<a
+							href={"/dashboard/" + user._id.toString()}
+							id={styles.breadcrumb_item_before}
+						>
+							Dashboard
+						</a>
 					</li>
-					<li className="breadcrumb-item active" aria-current="page">
+					<li
+						id={styles.breadcrumb_item}
+						className="breadcrumb-item active"
+						aria-current="page"
+					>
 						Transactions
 					</li>
 				</ol>

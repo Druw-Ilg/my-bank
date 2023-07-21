@@ -6,8 +6,17 @@ import { withSessionSsr } from "@/utils/withSession";
 import Heads from "@/components/Heads";
 import styles from "@/styles/Home.module.scss";
 import Footer from "@/components/Footer";
+import BounceLoader from "react-spinners/BounceLoader";
+
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
 
 export default function Home() {
+	const [loading, setLoading] = useState(false);
 	const [firstName, setFirstName] = useState();
 	const [password, setPassword] = useState();
 	const [reload, setReload] = useState(false);
@@ -24,6 +33,9 @@ export default function Home() {
 	const handleSubmit = async (e) => {
 		//prevent default behavior
 		e.preventDefault();
+
+		// spinner on
+		setLoading(true);
 
 		/*get the form data and insert them into
 		 *an object for better handling
@@ -55,6 +67,9 @@ export default function Home() {
 		// get result from login
 		const res = await login.json();
 
+		// spinner off
+		setLoading(false);
+
 		if (res.status >= 400) {
 			setErrorMessage(res.message);
 		} else if (res.ok) {
@@ -74,7 +89,16 @@ export default function Home() {
 				<form className={styles.form} onSubmit={handleSubmit}>
 					<p className={styles.form_title}>Login</p>
 					<p className={styles.errorMessage}>{errorMessage}</p>
-
+					{loading && (
+						<BounceLoader
+							color="#0070f3"
+							loading={loading}
+							cssOverride={override}
+							size={50}
+							aria-label="Loading Spinner"
+							data-testid="loader"
+						/>
+					)}
 					<div className={styles.field}>
 						<label htmlFor="firstName">First Name</label>
 						<input

@@ -7,6 +7,15 @@ import Modal from "react-bootstrap/Modal";
 import styles from "@/styles/Content.module.scss";
 import { postTransaction, transferFund } from "@/api/operations";
 import { dollarSign, alert } from "@/utils/someFunc";
+// spinner
+import BounceLoader from "react-spinners/BounceLoader";
+
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
 
 const getUserWithAccounts = async (id) => {
 	// fetch user's data including accounts
@@ -30,6 +39,8 @@ function TransferModal({
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	//spinner
+	const [loading, setLoading] = useState(false);
 
 	// user's data
 	const [accName, setAccName] = useState("");
@@ -79,7 +90,10 @@ function TransferModal({
 	// handle transfer
 	const handleTransfer = async (e) => {
 		e.preventDefault();
-		const donorNewBalance = donorBalance - amount; //set the new balance for donor
+		// spinner on
+		setLoading(true);
+
+		const donorNewBalance = parseInt(donorBalance) - parseInt(amount); //set the new balance for donor
 		// set new balance for recipient.
 		const recipientNewBalance = parseInt(amount) + parseInt(recipientBalance);
 
@@ -94,10 +108,13 @@ function TransferModal({
 				parseInt(recipientNewBalance),
 				recipientAccType
 			).then((data) => {
+				// record the transaction
+				const transactionType = "Transfer";
+				let transactionStatus;
+
 				if (data.status < 300) {
-					// record the transaction
-					const transactionType = "Transfer";
-					let transactionStatus;
+					// spinner off
+					setLoading(false);
 
 					transactionStatus = "Success";
 
@@ -129,6 +146,9 @@ function TransferModal({
 
 					handleComponentReturn(data.status, data.message); //show success message
 				} else {
+					// spinner off
+					setLoading(false);
+
 					transactionStatus = "Failed";
 					postTransaction(
 						userId,
@@ -145,6 +165,8 @@ function TransferModal({
 				}
 			});
 		} else {
+			// spinner off
+			setLoading(false);
 			setErrorAmount(true);
 		}
 	};
@@ -222,12 +244,25 @@ function TransferModal({
 							</span>
 						</Modal.Body>
 						<Modal.Footer>
-							<Button variant="secondary" onClick={handleClose}>
-								Close
-							</Button>
-							<Button variant="primary" type="submit">
-								Transfer
-							</Button>
+							{loading ? (
+								<BounceLoader
+									color="#0070f3"
+									loading={loading}
+									cssOverride={override}
+									size={30}
+									aria-label="Loading Spinner"
+									data-testid="loader"
+								/>
+							) : (
+								<>
+									<Button variant="secondary" onClick={handleClose}>
+										Close
+									</Button>
+									<Button variant="primary" type="submit">
+										Transfer
+									</Button>
+								</>
+							)}
 						</Modal.Footer>
 					</form>
 				</div>

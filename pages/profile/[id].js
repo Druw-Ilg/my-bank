@@ -1,16 +1,17 @@
 import { useState, useReducer, useEffect } from "react";
 import { useRouter } from "next/router";
-
 import styles from "@/styles/Content.module.scss";
 
+// bootstrap components
 import Accordion from "react-bootstrap/Accordion";
 import { useAccordionButton } from "react-bootstrap/AccordionButton";
-
 import Card from "react-bootstrap/Card";
-
+// Toastify
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { toastSuccess, toastError, alert } from "@/utils/someFunc";
+// Spinner
+import BounceLoader from "react-spinners/BounceLoader";
 
 import { server } from "@/utils/server";
 import Heads from "@/components/Heads";
@@ -18,8 +19,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProBssAcc from "@/components/ProBssAcc";
 import ProSvgAcc from "@/components/ProSvgAcc";
-
 import { getBusinesses, getSavingAcc } from "@/api/operations";
+
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
 
 // collect form data
 const formReducer = (state, event) => {
@@ -45,6 +52,8 @@ function CustomToggle({ children, eventKey }) {
 }
 
 const profile = ({ user }) => {
+	const [loading, setLoading] = useState(false);
+
 	const [formData, setFormData] = useReducer(formReducer, {});
 	const [businessAccounts, setBusinessAccounts] = useState([]);
 	const [savingAccounts, setSavingAccounts] = useState([]);
@@ -86,6 +95,9 @@ const profile = ({ user }) => {
 	const handlePasswordSubmit = async (e) => {
 		e.preventDefault();
 
+		// spinner on
+		setLoading(true);
+
 		// check that new password macthes confirmation password
 		if (formData.newPassword !== formData.confirm_password) {
 			setSuccessMessage("");
@@ -95,6 +107,10 @@ const profile = ({ user }) => {
 			setSuccessMessage("");
 			setErrorNewPass("");
 			setErrorMessage("Empty form data");
+		} else if (formData.newPassword.length < 7) {
+			setSuccessMessage("");
+			setErrorNewPass("");
+			setErrorMessage("Password must be at least 7 characters.");
 		} else {
 			const endpoint = `${server}/api/user/changePassword/${user._id}`;
 			const jsonData = JSON.stringify(formData);
@@ -118,6 +134,8 @@ const profile = ({ user }) => {
 				setSuccessMessage(res.message);
 			}
 		}
+		// spinner off
+		setLoading(false);
 	};
 
 	// callback function to receive data from child component
@@ -142,9 +160,18 @@ const profile = ({ user }) => {
 			<nav aria-label="breadcrumb" className={styles.nav_breadcrumb}>
 				<ol className="breadcrumb">
 					<li className="breadcrumb-item">
-						<a href={"/dashboard/" + user._id.toString()}>Dashboard</a>
+						<a
+							href={"/dashboard/" + user._id.toString()}
+							id={styles.breadcrumb_item_before}
+						>
+							Dashboard
+						</a>
 					</li>
-					<li className="breadcrumb-item active" aria-current="page">
+					<li
+						className="breadcrumb-item active"
+						id={styles.breadcrumb_item}
+						aria-current="page"
+					>
 						profile
 					</li>
 				</ol>
@@ -246,6 +273,7 @@ const profile = ({ user }) => {
 															placeholder="********"
 															name="newPassword"
 															id="newPassword"
+															min="7"
 															required
 															onChange={setFormData}
 														/>
@@ -259,13 +287,27 @@ const profile = ({ user }) => {
 															placeholder="*******"
 															name="confirm_password"
 															id="confirm_password"
+															min="7"
 															required
 															onChange={setFormData}
 														/>
 													</span>
 												</div>
 												<p className={styles.errorMessage}>{errorNewPass}</p>
-												<button className={styles.changePassBtn}>Submit</button>
+												{loading ? (
+													<BounceLoader
+														color="#0070f3"
+														loading={loading}
+														cssOverride={override}
+														size={30}
+														aria-label="Loading Spinner"
+														data-testid="loader"
+													/>
+												) : (
+													<button className={styles.changePassBtn}>
+														Submit
+													</button>
+												)}
 											</form>
 										</Card.Body>
 									</Card>

@@ -13,7 +13,7 @@ export async function getBusinesses(uId) {
 		},
 	});
 	const business_acc = await getAccounts.json();
-	if (business_acc.status === 200) {
+	if (business_acc.status < 300) {
 		return business_acc.data;
 	} else {
 		throw new Error("An error occurred while getting business accounts");
@@ -97,7 +97,7 @@ export async function getSavingAcc(uId) {
 		},
 	});
 	const saving_acc = await getAccounts.json();
-	if (saving_acc.status === 200) {
+	if (saving_acc.status < 300) {
 		return saving_acc.data;
 	} else {
 		throw new Error("An error occurred while getting saving accounts");
@@ -114,7 +114,7 @@ export async function postSavingAcc(data, uId, accChecked) {
 	// check if account number already exists
 
 	while (true) {
-		if (statusCode === 200) {
+		if (statusCode < 200) {
 			accountNumber = accNumGen();
 			// following endpoint return a status code of 200 if account exists else 404
 			let account = await fetch(
@@ -263,7 +263,7 @@ export async function transferFund(
 		});
 		const recipientJson = await recipientEndpoint.json();
 
-		if (recipientJson.status === 201) {
+		if (recipientJson.status < 300) {
 			// deduct from donor's account
 			const donorData = JSON.stringify({
 				acc_number: donor,
@@ -315,7 +315,7 @@ export async function payment(
 		);
 		let accountResponse = await accountRequest.json();
 
-		if (accountResponse.status === 200) {
+		if (accountResponse.status < 300) {
 			// beneficiary is a check account
 			// get balance then proceed to payment
 
@@ -350,7 +350,7 @@ export async function payment(
 			);
 			accountResponse = await accountRequest.json();
 
-			if (accountResponse.status === 200) {
+			if (accountResponse.status < 300) {
 				// beneficiary is a business account
 				// get balance then proceed to payment
 
@@ -384,7 +384,7 @@ export async function payment(
 				);
 				accountResponse = await accountRequest.json();
 
-				if (accountResponse.status === 200) {
+				if (accountResponse.status < 300) {
 					// beneficiary is a saving account
 					// get balance then proceed to payment
 

@@ -4,10 +4,8 @@ import { useRouter } from "next/router";
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
-
-import { server } from "@/utils/server";
-import { dollarSign, toastSuccess, toastError, alert } from "@/utils/someFunc";
-
+//spinner
+import BounceLoader from "react-spinners/BounceLoader";
 // toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +16,8 @@ import {
 	getSavingAcc,
 	postSavingAcc,
 } from "@/api/operations";
-
+import { server } from "@/utils/server";
+import { dollarSign, toastSuccess, toastError, alert } from "@/utils/someFunc";
 import styles from "@/styles/Content.module.scss";
 import Heads from "@/components/Heads";
 import Header from "@/components/Header";
@@ -29,6 +28,13 @@ import DepositModal from "@/components/DepositModal";
 import TransferModal from "@/components/TransferModal";
 import PaymentsModal from "@/components/PaymentsModal";
 
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
+
 // form reducer for add account form. It gathers all form data
 const addAccFormReducer = (state, event) => {
 	return {
@@ -38,6 +44,8 @@ const addAccFormReducer = (state, event) => {
 };
 
 const dashboard = ({ user }) => {
+	const [loadingAddAccForm, setLoadingAddAccForm] = useState(false);
+
 	const [addAccData, setAddAccData] = useReducer(addAccFormReducer, {});
 	const [businessAccounts, setBusinessAccounts] = useState([]);
 	const [savingAccounts, setSavingAccounts] = useState([]);
@@ -47,9 +55,7 @@ const dashboard = ({ user }) => {
 	const accForm = () => setAcc(true);
 
 	// router to refresh the page on demand
-
 	const router = useRouter();
-
 	const loadDashboard = () => {
 		router.push(`${server}/dashboard/${user._id}`);
 	};
@@ -90,8 +96,14 @@ const dashboard = ({ user }) => {
 	const addAccountForm = (e) => {
 		e.preventDefault();
 
+		// spinner on
+		setLoadingAddAccForm(true);
+
 		if (addAccData.acc_type === "Business Account") {
 			postBusinessAcc(addAccData, user._id, user.business_acc).then((data) => {
+				// spinner off
+				setLoadingAddAccForm(false);
+
 				if (data.status === 201) {
 					toastSuccess(data.message);
 					fetchBusinesses();
@@ -101,9 +113,12 @@ const dashboard = ({ user }) => {
 			});
 		} else if (addAccData.acc_type === "Saving Account") {
 			postSavingAcc(addAccData, user._id, user.saving_acc).then((data) => {
+				// spinner off
+				setLoadingAddAccForm(false);
+
 				if (data.status === 201) {
-					fetchSavingAcc();
 					toastSuccess(data.message);
+					fetchSavingAcc();
 				} else {
 					toastError(data.message);
 				}
@@ -322,9 +337,20 @@ const dashboard = ({ user }) => {
 								onChange={setAddAccData}
 							/>
 						</div>
-						<Button variant="primary" type="submit">
-							Add an account
-						</Button>
+						{loadingAddAccForm ? (
+							<BounceLoader
+								color="#0070f3"
+								loading={loadingAddAccForm}
+								cssOverride={override}
+								size={20}
+								aria-label="Loading Spinner"
+								data-testid="loader"
+							/>
+						) : (
+							<Button variant="primary" type="submit">
+								Add an account
+							</Button>
+						)}
 					</form>
 				</Offcanvas.Body>
 			</Offcanvas>

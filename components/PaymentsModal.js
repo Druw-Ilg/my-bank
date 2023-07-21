@@ -4,6 +4,15 @@ import Modal from "react-bootstrap/Modal";
 import styles from "@/styles/Content.module.scss";
 import { dollarSign, alert } from "@/utils/someFunc";
 import { postPayment, payment } from "@/api/operations";
+// spinner
+import BounceLoader from "react-spinners/BounceLoader";
+
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
 
 // form reducer for payment form. It gathers all form data
 const paymentDataFormReducer = (state, event) => {
@@ -25,12 +34,16 @@ function PaymentsModal({
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	const [loading, setLoading] = useState(false);
+
 	// save form data
 	const [paymentData, setPaymentData] = useReducer(paymentDataFormReducer, {});
 	const [errorAmount, setErrorAmount] = useState(false);
 
 	const handlePayment = (e) => {
 		e.preventDefault();
+		// spinner on
+		setLoading(true);
 
 		// Check if the amount to pay is less than the balance then proceed
 		if (paymentData.amount < balance) {
@@ -80,8 +93,12 @@ function PaymentsModal({
 					);
 					handleComponentReturn(data.status, "Payment Failed"); //show Error message
 				}
+				// spinner off
+				setLoading(false);
 			});
 		} else {
+			// spinner off
+			setLoading(false);
 			setErrorAmount(true);
 		}
 	};
@@ -103,6 +120,17 @@ function PaymentsModal({
 
 					<form className={styles.payments_form} onSubmit={handlePayment}>
 						<Modal.Body>
+							{loading && (
+								<BounceLoader
+									color="#0070f3"
+									loading={loading}
+									cssOverride={override}
+									size={50}
+									aria-label="Loading Spinner"
+									data-testid="loader"
+								/>
+							)}
+
 							<span>
 								<label>Name: </label>
 								<input

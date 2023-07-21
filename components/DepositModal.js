@@ -4,17 +4,28 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "@/styles/Content.module.scss";
 import { postTransaction } from "@/api/operations";
+//spinner
+import BounceLoader from "react-spinners/BounceLoader";
 
 // toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { dollarSign, toastSuccess, toastError, alert } from "@/utils/someFunc";
 
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
+
 function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 	// modal handles
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	// spinner
+	const [loading, setLoading] = useState(false);
 
 	// user's data
 	const [deposit, setDeposit] = useState();
@@ -30,6 +41,9 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 	// handle deposit
 	const handleDeposit = async (e) => {
 		e.preventDefault();
+
+		// spinner on
+		setLoading(true);
 
 		//Get the new balance then save the deposit
 
@@ -61,7 +75,10 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 		const transactionType = "Deposit";
 		let status;
 
-		if (res.status == 201) {
+		if (res.status < 300) {
+			// spinner off
+			setLoading(false);
+
 			status = "Success";
 			postTransaction(
 				userId,
@@ -73,10 +90,12 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 				description,
 				newBalance
 			).then((data) => console.log(data));
-
-			refreshPage();
 			toastSuccess(res.message); // show success message
+			refreshPage();
 		} else {
+			// spinner off
+			setLoading(false);
+
 			status = "Failed";
 			postTransaction(
 				userId,
@@ -133,12 +152,25 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 							</span>
 						</Modal.Body>
 						<Modal.Footer>
-							<Button variant="secondary" onClick={handleClose}>
-								Close
-							</Button>
-							<Button variant="primary" type="submit">
-								Deposit
-							</Button>
+							{loading ? (
+								<BounceLoader
+									color="#0070f3"
+									loading={loading}
+									cssOverride={override}
+									size={20}
+									aria-label="Loading Spinner"
+									data-testid="loader"
+								/>
+							) : (
+								<>
+									<Button variant="secondary" onClick={handleClose}>
+										Close
+									</Button>
+									<Button variant="primary" type="submit">
+										Deposit
+									</Button>
+								</>
+							)}
 						</Modal.Footer>
 					</form>
 				</div>

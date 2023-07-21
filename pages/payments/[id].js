@@ -48,9 +48,18 @@ const payments = ({ user, payments }) => {
 			<nav aria-label="breadcrumb" className={styles.nav_breadcrumb}>
 				<ol className="breadcrumb">
 					<li className="breadcrumb-item">
-						<a href={"/dashboard/" + user._id.toString()}>Dashboard</a>
+						<a
+							href={"/dashboard/" + user._id.toString()}
+							id={styles.breadcrumb_item_before}
+						>
+							Dashboard
+						</a>
 					</li>
-					<li className="breadcrumb-item active" aria-current="page">
+					<li
+						className="breadcrumb-item active"
+						id={styles.breadcrumb_item}
+						aria-current="page"
+					>
 						Payments
 					</li>
 				</ol>
@@ -59,7 +68,7 @@ const payments = ({ user, payments }) => {
 			<div className={styles.main}>
 				<div className={styles.container}>
 					<div className={styles.grid}>
-						<div className={styles.account}>
+						<div className={styles.payments}>
 							{payments.length < 1 ? (
 								alert("danger", "No payments available for the moment.")
 							) : (
