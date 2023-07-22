@@ -89,16 +89,7 @@ export default function Home() {
 				<form className={styles.form} onSubmit={handleSubmit}>
 					<p className={styles.form_title}>Login</p>
 					<p className={styles.errorMessage}>{errorMessage}</p>
-					{loading && (
-						<BounceLoader
-							color="#0070f3"
-							loading={loading}
-							cssOverride={override}
-							size={50}
-							aria-label="Loading Spinner"
-							data-testid="loader"
-						/>
-					)}
+
 					<div className={styles.field}>
 						<label htmlFor="firstName">First Name</label>
 						<input
@@ -123,7 +114,19 @@ export default function Home() {
 							}}
 						/>
 					</div>
-					<button>Submit</button>
+					{loading ? (
+						<BounceLoader
+							color="#0070f3"
+							loading={loading}
+							cssOverride={override}
+							size={30}
+							aria-label="Loading Spinner"
+							data-testid="loader"
+						/>
+					) : (
+						<button type="submit">Submit</button>
+					)}
+
 					<p className={styles.create_account}>
 						Don't have an account?{" "}
 						<span>

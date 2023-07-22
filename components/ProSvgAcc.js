@@ -10,7 +10,7 @@ const ProSvgAcc = ({ account, onDatataGenerated }) => {
 	let actionData;
 
 	// delete account
-	async function deleteAcc(accountId) {
+	async function deleteAcc(accountId, acc_number) {
 		try {
 			const JSONdata = JSON.stringify({
 				id: accountId,
@@ -34,6 +34,23 @@ const ProSvgAcc = ({ account, onDatataGenerated }) => {
 					message: res.message,
 				};
 				onDatataGenerated(actionData);
+
+				// delete all transactions related to this account
+				const JsonTransData = JSON.stringify({
+					acc_number: acc_number,
+				});
+
+				const transToDelete = await fetch(`${server}/api/transactions/`, {
+					method: "DELETE",
+					// Tell the server we're sending JSON.
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JsonTransData,
+				});
+
+				const deletedTrans = await transToDelete.json();
+				// console.log(deletedTrans);
 			} else {
 				actionData = {
 					action: "delete account",
@@ -60,7 +77,7 @@ const ProSvgAcc = ({ account, onDatataGenerated }) => {
 				<button
 					className="btn btn-danger"
 					size="sm"
-					onClick={() => deleteAcc(account._id.toString())}
+					onClick={() => deleteAcc(account._id.toString(), account.acc_number)}
 				>
 					<i className="bi bi-trash"></i> Delete
 				</button>

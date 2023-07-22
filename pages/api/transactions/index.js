@@ -48,10 +48,11 @@ export default async function handler(req, res, next) {
 
 		case "DELETE":
 			try {
-				const { transaction } = body;
+				// delete transactions related to an account
+				const { acc_number } = body;
 				const data = await db
 					.collection("transactions")
-					.deleteOne({ user_id: user_id });
+					.deleteMany({ acc_number: acc_number });
 
 				res.send({
 					status: 201,
