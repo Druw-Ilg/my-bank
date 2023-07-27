@@ -189,8 +189,8 @@ function TransferModal({
 					<form className={styles.transfer_form} onSubmit={handleTransfer}>
 						<Modal.Body>
 							<span className={styles.modal_info}>
-								'You can transfer fund from this account to one of your other
-								accounts'
+								&apos;You can transfer fund from this account to one of your
+								other accounts&apos;
 							</span>
 							<span>
 								<label>Choose an account: </label>

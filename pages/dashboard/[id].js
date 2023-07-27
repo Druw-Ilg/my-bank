@@ -43,7 +43,7 @@ const addAccFormReducer = (state, event) => {
 	};
 };
 
-const dashboard = ({ user }) => {
+const Dashboard = ({ user }) => {
 	const [loadingAddAccForm, setLoadingAddAccForm] = useState(false);
 
 	const [addAccData, setAddAccData] = useReducer(addAccFormReducer, {});
@@ -90,7 +90,7 @@ const dashboard = ({ user }) => {
 		 */
 
 		fetchSavingAcc();
-	}, []);
+	});
 
 	// function to add an account
 	const addAccountForm = (e) => {
@@ -359,6 +359,8 @@ const dashboard = ({ user }) => {
 	);
 };
 
+export default Dashboard;
+
 export const getStaticPaths = async () => {
 	// fetch users list
 	const res = await fetch(`${server}/api/user`, {
@@ -367,6 +369,7 @@ export const getStaticPaths = async () => {
 			"Content-Type": "application/json",
 		},
 	});
+
 	const users = await res.json();
 
 	// get the paths we want to prerender based on users
@@ -383,12 +386,10 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
 	// fetch user's data
+
 	const res = await fetch(`${server}/api/user/${params.id}`);
 	const user = await res.json();
-
 	return {
 		props: { user },
 	};
 };
-
-export default dashboard;

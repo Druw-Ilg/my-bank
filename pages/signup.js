@@ -14,7 +14,7 @@ const formReducer = (state, event) => {
 	};
 };
 
-const signup = () => {
+const Signup = () => {
 	const [formData, setFormData] = useReducer(formReducer, {});
 	const [errorMessage, setErrorMessage] = useState("");
 	const router = useRouter();
@@ -62,7 +62,7 @@ const signup = () => {
 		<div className={styles.container}>
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					Welcome to <a href="/">Your Bank</a>
+					Welcome to <Link href="/">Your Bank</Link>
 				</h1>
 
 				<form className={styles.form} onSubmit={signupForm}>
@@ -142,4 +142,4 @@ const signup = () => {
 	);
 };
 
-export default signup;
+export default Signup;

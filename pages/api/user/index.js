@@ -13,9 +13,9 @@ export default async function handler(req, res, next) {
 			try {
 				const data = await db.collection("users").find({}).toArray();
 
-				res.send(data);
+				res.json(data);
 			} catch (error) {
-				res.status(500).send({ message: error });
+				res.json({status: 500, message: error });
 			}
 			break;
 
@@ -30,12 +30,12 @@ export default async function handler(req, res, next) {
 					balance,
 				});
 
-				res.send({
+				res.json({
 					status: 201,
 					message: "Welcome to your Bank " + firstName + ".",
 				});
 			} catch (error) {
-				res.send({ status: 401, message: error.message });
+				res.json({ status: 401, message: error.message });
 			}
 			break;
 

@@ -83,7 +83,7 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					Welcome to <a href="/">Your Bank</a>
+					Welcome to <Link href="/">Your Bank</Link>
 				</h1>
 
 				<form className={styles.form} onSubmit={handleSubmit}>
@@ -128,7 +128,7 @@ export default function Home() {
 					)}
 
 					<p className={styles.create_account}>
-						Don't have an account?{" "}
+						Don&apos; t have an account?
 						<span>
 							<Link href="/signup">Sign up</Link>
 						</span>

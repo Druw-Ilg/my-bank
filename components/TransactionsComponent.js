@@ -2,7 +2,7 @@
 import styles from "@/styles/Content.module.scss";
 import { dollarSign } from "@/utils/someFunc";
 
-const Transactions = ({ transactions }) => {
+const TransactionsComponent = ({ transactions }) => {
 	return (
 		<>
 			{transactions.map((element) => (
@@ -21,4 +21,4 @@ const Transactions = ({ transactions }) => {
 	);
 };
 
-export default Transactions;
+export default TransactionsComponent;
