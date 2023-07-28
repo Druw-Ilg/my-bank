@@ -15,7 +15,7 @@
     "bootstrap-icons": "^1.10.5",
     "iron-session": "^6.3.1",
     "mongodb": "^5.7.0",
-    "next": "12.0",
+    "next": "12.2",
     "next-connect": "^0.13.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",

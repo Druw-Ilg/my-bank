@@ -158,6 +158,7 @@ const Dashboard = ({ user }) => {
 		}
 	};
 
+	// console.log(user);
 	return (
 		<>
 			<Heads />
@@ -361,35 +362,15 @@ const Dashboard = ({ user }) => {
 
 export default Dashboard;
 
-export const getStaticPaths = async () => {
-	// fetch users list
-	const res = await fetch(`${server}/api/user`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-
-	const users = await res.json();
-
-	// get the paths we want to prerender based on users
-	const paths = users.map((user) => {
+Dashboard.getInitialProps = async (ctx) => {
+	try {
+		const id = ctx.query.id;
+		const res = await fetch(`${server}/api/user/${id}`);
+		const user = await res.json();
 		return {
-			params: { id: user._id.toString() },
+			user: user,
 		};
-	});
-	return {
-		paths,
-		fallback: false,
-	};
-};
-
-export const getStaticProps = async ({ params }) => {
-	// fetch user's data
-
-	const res = await fetch(`${server}/api/user/${params.id}`);
-	const user = await res.json();
-	return {
-		props: { user },
-	};
+	} catch (error) {
+		return console.log(error.message);
+	}
 };
