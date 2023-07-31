@@ -6,18 +6,24 @@ import Accordion from "react-bootstrap/Accordion";
 // get all business accounts that belong to a specific user
 
 export async function getBusinesses(uId) {
-	const getAccounts = await fetch(`${server}/api/business-account/uId/${uId}`, {
+	try {
+		const getAccounts = await fetch(`${server}/api/business-account/uId/${uId}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "*"
 		},
 	});
 	const business_acc = await getAccounts.json();
 	if (business_acc.status < 300) {
-		return business_acc.data;
+		return business_acc;
 	} else {
-		throw new Error("An error occurred while getting business accounts");
+		throw new Error(business_acc.message);
 	}
+	} catch (error) {
+		return error
+	}
+	
 }
 
 // save a business account
@@ -90,18 +96,24 @@ export async function postBusinessAcc(data, uId, accChecked) {
 // get all saving accounts that belong to a specific user
 
 export async function getSavingAcc(uId) {
-	const getAccounts = await fetch(`${server}/api/saving-account/uId/${uId}`, {
+	try {
+		const getAccounts = await fetch(`${server}/api/saving-account/uId/${uId}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
+			"Access-Control-Allow-Origin": "*"
 		},
 	});
 	const saving_acc = await getAccounts.json();
 	if (saving_acc.status < 300) {
-		return saving_acc.data;
+		return saving_acc;
 	} else {
-		throw new Error("An error occurred while getting saving accounts");
+		throw new Error(saving_acc.message);
 	}
+	} catch (error) {
+		return error
+	}
+	
 }
 
 // post saving accounts

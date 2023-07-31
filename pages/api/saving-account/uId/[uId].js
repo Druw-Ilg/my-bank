@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 			.find({ user_id: uId })
 			.toArray();
 
-		if (data != null && data != undefined) {
+		if (data && data._id !== "") {
 			res.json({ status: 200, data });
 		} else {
 			throw new Error("This user doesn't have saving account(s).");

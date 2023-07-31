@@ -50,7 +50,7 @@ async function loginRoute(req, res) {
 		} catch (error) {
 			// Sends an HTTP bad request
 			// if user is not found
-			res.json({ status: 500, message: error });
+			res.json({ status: 500, message: error.message });
 		}
 	} else {
 		res.json({ status: 404, message: "Incorrect name or password." });

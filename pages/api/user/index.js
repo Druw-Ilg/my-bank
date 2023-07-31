@@ -20,7 +20,7 @@ export default async function handler(req, res, next) {
 			break;
 
 		case "POST":
-			const { firstName, lastName, password, balance } = body;
+			const { firstName, lastName, password, balance, business_acc, saving_acc, acc_num, created } = body;
 
 			try {
 				const data = await db.collection("users").insertOne({
@@ -28,6 +28,10 @@ export default async function handler(req, res, next) {
 					lastName,
 					password,
 					balance,
+					business_acc,
+					saving_acc,
+					acc_num,
+					created
 				});
 
 				res.json({

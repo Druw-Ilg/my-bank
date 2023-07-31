@@ -1,6 +1,8 @@
 import { server } from "@/utils/server";
 import { hashPass, comparePass } from "@/utils/encryption";
 import { withSessionRoute } from "@/utils/withSession";
+import { accNumGen, today } from "@/utils/someFunc";
+
 
 // signup a new user
 export default withSessionRoute(register);
@@ -11,6 +13,12 @@ async function register(req, res) {
 	const unhashedPassword = data.password;
 	//encrypt user password
 	data.password = await hashPass(data.password);
+
+	// define account number and creation date;
+	data.acc_num = accNumGen();
+	data.created = today();
+	data.business_acc = false
+	data.saving_acc = false
 
 	const endpoint = `${server}/api/user/`;
 

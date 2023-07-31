@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useReducer, useState } from "react";
 import { useRouter } from "next/router";
 import { server } from "@/utils/server";
+import BounceLoader from "react-spinners/BounceLoader";
 
 // use of a reducer to collect form data
 
@@ -14,7 +15,16 @@ const formReducer = (state, event) => {
 	};
 };
 
+// spinner props
+const override = {
+	display: "block",
+	margin: "0 auto",
+	borderColor: "red",
+};
+
 const Signup = () => {
+	const [loading, setLoading] = useState(false);
+
 	const [formData, setFormData] = useReducer(formReducer, {});
 	const [errorMessage, setErrorMessage] = useState("");
 	const router = useRouter();
@@ -26,6 +36,9 @@ const Signup = () => {
 
 	const signupForm = async (e) => {
 		e.preventDefault();
+
+		// spinner on
+		setLoading(true);
 
 		if (formData.password !== formData.confirm_password) {
 			const errorPass = "Passwords do not match!";
@@ -56,6 +69,9 @@ const Signup = () => {
 				loadDashboard(res.id);
 			}
 		}
+
+		// spinner off
+		setLoading(false);
 	};
 
 	return (
@@ -127,7 +143,19 @@ const Signup = () => {
 						/>
 					</div>
 
-					<button>Submit</button>
+					{loading ? (
+						<BounceLoader
+							color="#0070f3"
+							loading={loading}
+							cssOverride={override}
+							size={30}
+							aria-label="Loading Spinner"
+							data-testid="loader"
+						/>
+					) : (
+						<button type="submit">Submit</button>
+					)}
+
 					<p className={styles.create_account}>
 						Already have an account?{" "}
 						<span>

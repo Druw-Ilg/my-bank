@@ -141,17 +141,27 @@ export default function Home() {
 }
 
 export const getServerSideProps = withSessionSsr(
-	async function getServerSideProps({ req }) {
+	async function getServerSideProps({ req, res }) {
 		const data = req.session.myBankSession;
 
 		if (data !== undefined && data.fName !== "") {
-			const id = data.id;
-			return {
-				redirect: {
-					destination: `${server}/dashboard/${id}`,
-					status: 200,
-				},
-			};
+			try {
+				// if the user is authenticated, redirect to the dashboard
+
+				const id = data.id;
+
+				return {
+					redirect: {
+						destination: `/dashboard/${id}`,
+						status: 200,
+					},
+				};
+			} catch (error) {
+				console.log(error.message);
+				return {
+					props: {},
+				};
+			}
 		}
 		return {
 			props: {},

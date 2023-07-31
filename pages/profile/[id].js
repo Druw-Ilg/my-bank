@@ -66,13 +66,22 @@ const Profile = ({ user }) => {
 	// fetch business & saving accounts
 	async function fetchBusinesses() {
 		if (user.business_acc) {
-			getBusinesses(user._id).then((data) => setBusinessAccounts(data));
+			getBusinesses(user._id).then((data) => {if (data.status < 300) {
+				setBusinessAccounts(data.data)
+			}else{
+					toastError(data.message);
+
+			}});
 		}
 	}
 
 	async function fetchSavingAcc() {
 		if (user.saving_acc) {
-			getSavingAcc(user._id).then((data) => setSavingAccounts(data));
+			getSavingAcc(user._id).then((data) => {if (data.status < 300) {
+				return setSavingAccounts(data.data)
+			} else {
+				return toastError(data.message);
+			}});
 		}
 	}
 	useEffect(() => {
@@ -89,7 +98,7 @@ const Profile = ({ user }) => {
 		 */
 
 		fetchSavingAcc();
-	});
+	}, []);
 
 	// handle password change action
 	const handlePasswordSubmit = async (e) => {
