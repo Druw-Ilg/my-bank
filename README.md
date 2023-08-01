@@ -1,34 +1,23 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Description
 
-First, run the development server:
+[My-Bank](https://my-bank-six.vercel.app/) is an online banking web app using all CRUD functions.
+The app allows users to create an account and perfrom several operations. At registration it automatically assigns a "Check account" to the user, he/she can directly make a deposit, create a business or saving account.
+The user can also make a transfer to one of his/her other account and make a payment to another user account on the app.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Technologies
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- JavaScript, for dynamic and interactive web pages and to execute complex actions.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Next.js (React.js Framework), for server-side rendering, automatic code splitting, and a straightforward routing system, resulting in better performance and improved user experience.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Bootstrap, styling components by providing a set of pre-designed and customizable UI components like buttons, forms, and breadcrumbs, which allowed me to create a visually appealing and consistent front-end for this app.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- SCSS, for a more organized and modular way to write CSS, making it easier to manage styles and maintain a consistent design across the application.
 
-## Learn More
+- MongoDb, for a flexible and scalable NoSQL database, enabling efficient storage and retrieval of user account data, transactions, and other financial information.
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js, to build the backend of the application with ease, handle HTTP requests, and interact with the database for user authentication and data processing.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- iron-session, to secure and encrypt session management, allowing me to handle user authentication and store sensitive session data on the server securely.
