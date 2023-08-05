@@ -41,14 +41,14 @@ async function register(req, res) {
 		});
 
 	//save entries into database
+	const jsonData = JSON.stringify(data);
 
 	const sign = await fetch(endpoint, {
 		method: "POST",
 		headers: {
-			accept: "application/json, text/plain, */*",
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(data),
+		body: jsonData,
 	});
 	result = await sign.json();
 
@@ -92,7 +92,7 @@ async function register(req, res) {
 			}
 		} catch (error) {
 			// if user is not found
-			return res.json({ status: 500, message: error });
+			return res.json({ status: 500, message: error.message });
 		}
 	} else {
 		res.json(res.status, res.message);
