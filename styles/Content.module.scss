@@ -10,20 +10,20 @@ $secondary-color: #c74c4cee;
 	}
 	.logout {
 		padding-top: 0.8rem;
-		a {
-			padding: 0.6rem 1rem;
-			color: $secondary-color;
+		.logoutBtn {
+			padding: 0.6rem 1rem !important;
+			color: $secondary-color !important;
 			font-weight: 400;
 			font-size: 1.1rem;
-			border: 1px solid $secondary-color;
+			border: 1px solid $secondary-color !important;
 			border-radius: 6px;
-			transition: background-color 0.7s ease;
+			transition: background-color 0.7s ease !important;
 		}
 
-		a:hover {
+		.logoutBtn:hover {
 			cursor: pointer;
-			color: #fff;
-			background-color: $secondary-color;
+			color: #fff !important;
+			background-color: $secondary-color !important;
 		}
 	}
 }
