@@ -63,10 +63,10 @@ const Signup = () => {
 			const register = await fetch(endpoint, options);
 			const res = await register.json();
 
-			if (res.status >= 400) {
-				setErrorMessage(res.message);
-			} else if (res.status == 201) {
+			if (res.status < 300) {
 				loadDashboard(res.id);
+			} else {
+				setErrorMessage(res.message);
 			}
 		}
 

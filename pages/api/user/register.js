@@ -3,7 +3,6 @@ import { hashPass, comparePass } from "@/utils/encryption";
 import { withSessionRoute } from "@/utils/withSession";
 import { accNumGen, today } from "@/utils/someFunc";
 
-
 // signup a new user
 export default withSessionRoute(register);
 
@@ -17,8 +16,8 @@ async function register(req, res) {
 	// define account number and creation date;
 	data.acc_num = accNumGen();
 	data.created = today();
-	data.business_acc = false
-	data.saving_acc = false
+	data.business_acc = false;
+	data.saving_acc = false;
 
 	const endpoint = `${server}/api/user/`;
 
@@ -54,7 +53,7 @@ async function register(req, res) {
 	result = await sign.json();
 
 	// If the query was accepted redirect or send error message
-	if (result.status == 201) {
+	if (result.status < 300) {
 		try {
 			users = await fetch(endpoint, {
 				method: "GET",
