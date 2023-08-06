@@ -37,41 +37,45 @@ const Signup = () => {
 	const signupForm = async (e) => {
 		e.preventDefault();
 
-		// spinner on
-		setLoading(true);
+		try {
+			// spinner on
+			setLoading(true);
 
-		if (formData.password !== formData.confirm_password) {
-			const errorPass = "Passwords do not match!";
-			setErrorMessage(errorPass);
-		} else if (Object.keys(formData).length == 0) {
-			console.log("Empty form data");
-		} else {
-			// convert form data to json format
-			const jsonData = JSON.stringify(formData);
-			// define endpoint
-			const endpoint = "./api/user/register";
-			// set options for req.body
-			const options = {
-				method: "POST",
-				// Tell the server we're sending JSON.
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: jsonData,
-			};
-			// send data to API endpoint
-			const register = await fetch(endpoint, options);
-			const res = await register.json();
-
-			if (res.status < 300) {
-				loadDashboard(res.id);
+			if (formData.password !== formData.confirm_password) {
+				const errorPass = "Passwords do not match!";
+				setErrorMessage(errorPass);
+			} else if (Object.keys(formData).length == 0) {
+				console.log("Empty form data");
 			} else {
-				setErrorMessage(res.message);
-			}
-		}
+				// convert form data to json format
+				const jsonData = JSON.stringify(formData);
+				// define endpoint
+				const endpoint = "/api/user/register";
+				// set options for req.body
+				const options = {
+					method: "POST",
+					// Tell the server we're sending JSON.
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: jsonData,
+				};
+				// send data to API endpoint
+				const register = await fetch(endpoint, options);
+				const res = await register.json();
 
-		// spinner off
-		setLoading(false);
+				if (res.status < 300) {
+					loadDashboard(res.id);
+				} else {
+					setErrorMessage(res.message);
+				}
+			}
+
+			// spinner off
+			setLoading(false);
+		} catch (error) {
+			console.log(error.message);
+		}
 	};
 
 	return (

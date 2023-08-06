@@ -34,46 +34,50 @@ export default function Home() {
 		//prevent default behavior
 		e.preventDefault();
 
-		// spinner on
-		setLoading(true);
+		try {
+			// spinner on
+			setLoading(true);
 
-		/*get the form data and insert them into
-		 *an object for better handling
-		 */
-		const data = {
-			firstName,
-			password,
-		};
+			/*get the form data and insert them into
+			 *an object for better handling
+			 */
+			const data = {
+				firstName,
+				password,
+			};
 
-		// convert data to json format
-		const JSONdata = JSON.stringify(data);
+			// convert data to json format
+			const JSONdata = JSON.stringify(data);
 
-		// API endpoint
-		const endpoint = "./api/user/login";
+			// API endpoint
+			const endpoint = "./api/user/login";
 
-		// Form the request to send data to the server.
-		const options = {
-			method: "POST",
-			// Tell the server we're sending JSON.
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSONdata,
-		};
+			// Form the request to send data to the server.
+			const options = {
+				method: "POST",
+				// Tell the server we're sending JSON.
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSONdata,
+			};
 
-		// Send the form data to API.
-		const login = await fetch(endpoint, options);
+			// Send the form data to API.
+			const login = await fetch(endpoint, options);
 
-		// get result from login
-		const res = await login.json();
+			// get result from login
+			const res = await login.json();
 
-		// spinner off
-		setLoading(false);
+			// spinner off
+			setLoading(false);
 
-		if (res.status >= 400) {
-			setErrorMessage(res.message);
-		} else if (res.ok) {
-			refreshPage();
+			if (res.status >= 400) {
+				setErrorMessage(res.message);
+			} else if (res.ok) {
+				refreshPage();
+			}
+		} catch (error) {
+			console.log(error.message);
 		}
 	};
 
