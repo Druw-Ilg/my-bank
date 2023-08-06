@@ -33,14 +33,14 @@ export default async function handler(req, res, next) {
 
 			try {
 				const data = await db.collection("users").insertOne({
-					firstName,
-					lastName,
-					password,
-					balance,
-					business_acc,
-					saving_acc,
-					acc_num,
-					created,
+					firstName: firstName,
+					lastName: lastName,
+					password: password,
+					balance: balance,
+					business_acc: business_acc,
+					saving_acc: saving_acc,
+					acc_num: acc_num,
+					created: created,
 				});
 
 				res.json({
