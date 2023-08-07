@@ -7,47 +7,46 @@ import Accordion from "react-bootstrap/Accordion";
 
 export async function getBusinesses(uId) {
 	try {
-		const getAccounts = await fetch(`${server}/api/business-account/uId/${uId}`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			"Access-Control-Allow-Origin": "*"
-		},
-	});
-	const business_acc = await getAccounts.json();
-	if (business_acc.status < 300) {
-		return business_acc;
-	} else {
-		throw new Error(business_acc.message);
-	}
+		const getAccounts = await fetch(
+			`${server}/api/business-account/uId/${uId}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*",
+				},
+			}
+		);
+		const business_acc = await getAccounts.json();
+		if (business_acc.status < 300) {
+			return business_acc;
+		} else {
+			throw new Error(business_acc.message);
+		}
 	} catch (error) {
-		return error
+		return error;
 	}
-	
 }
 
 // save a business account
 
 export async function postBusinessAcc(data, uId, accChecked) {
-	let accountNumber, statusText;
-	let statusCode = 200;
+	let accountNumber;
+	let statusCode = 0;
 
 	// generate an account number
 	// check if account number already exists
 
-	while (true) {
-		if (statusCode === 200) {
-			accountNumber = accNumGen();
-			// following endpoint return a status code of 200 if account exists else 404
-			let account = await fetch(
-				`${server}/api/business-account/${accountNumber}`
-			);
-			let acc = await account.json();
-			statusCode = acc.status;
-		} else {
-			break;
-		}
-	}
+	do {
+		accountNumber = accNumGen();
+
+		// following endpoint return a status code of 200 if account exists else 404
+		const account = await fetch(
+			`${server}/api/business-account/${accountNumber}`
+		);
+		const acc = await account.json();
+		statusCode = acc.status;
+	} while (statusCode < 300);
 
 	// send account details to database
 	// data: user_id, account type, account number, balance = 0(defaukt), business name, created,
@@ -98,46 +97,42 @@ export async function postBusinessAcc(data, uId, accChecked) {
 export async function getSavingAcc(uId) {
 	try {
 		const getAccounts = await fetch(`${server}/api/saving-account/uId/${uId}`, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			"Access-Control-Allow-Origin": "*"
-		},
-	});
-	const saving_acc = await getAccounts.json();
-	if (saving_acc.status < 300) {
-		return saving_acc;
-	} else {
-		throw new Error(saving_acc.message);
-	}
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
+			},
+		});
+		const saving_acc = await getAccounts.json();
+		if (saving_acc.status < 300) {
+			return saving_acc;
+		} else {
+			throw new Error(saving_acc.message);
+		}
 	} catch (error) {
-		return error
+		return error;
 	}
-	
 }
 
 // post saving accounts
 
 export async function postSavingAcc(data, uId, accChecked) {
-	let accountNumber, statusText;
-	let statusCode = 200;
+	let accountNumber;
+	let statusCode = 0;
 
 	// generate an account number
 	// check if account number already exists
 
-	while (true) {
-		if (statusCode < 200) {
-			accountNumber = accNumGen();
-			// following endpoint return a status code of 200 if account exists else 404
-			let account = await fetch(
-				`${server}/api/saving-account/${accountNumber}`
-			);
-			let acc = await account.json();
-			statusCode = acc.status;
-		} else {
-			break;
-		}
-	}
+	do {
+		accountNumber = accNumGen();
+
+		// following endpoint return a status code of 200 if account exists else 404
+		const account = await fetch(
+			`${server}/api/business-account/${accountNumber}`
+		);
+		const acc = await account.json();
+		statusCode = acc.status;
+	} while (statusCode < 300);
 
 	// send account details to database
 	// data: user_id, account type, account number, balance = 0(defaukt), account name, created,
