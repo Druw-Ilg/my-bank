@@ -104,7 +104,7 @@ async function register(req, res) {
 			return res.json({ status: res.status, message: res.message });
 		}
 	} catch (error) {
-		return res.json({ status: 500, message: error.message });
 		console.log(error.message);
+		return res.json({ status: 500, message: error.message });
 	}
 }
