@@ -14,7 +14,7 @@ async function register(req, res) {
 		//encrypt user password
 		data.password = await hashPass(data.password);
 
-		const endpoint = `${server}/api/user/`;
+		const endpoint = `${server}/api/user`;
 
 		let users = await fetch(endpoint, {
 			method: "GET",
