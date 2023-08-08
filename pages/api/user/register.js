@@ -49,9 +49,9 @@ async function register(req, res) {
 	const sign = await fetch(endpoint, {
 		method: "POST",
 		headers: {
-			"Content-Type": "application/json",
+			"Content-Type": "application/x-www-form-urlencoded",
 		},
-		body: jsonData,
+		body: new URLSearchParams(jsonData),
 	});
 	result = await sign.json();
 
