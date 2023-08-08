@@ -48,6 +48,7 @@ const SavingAcc = ({
 						balance={account.balance}
 						document={"saving_doc"}
 						userId={account.user_id}
+						handleComponentReturn={handleComponentReturn}
 					/>
 					<TransferModal
 						acc_name={account.acc_name}

@@ -167,6 +167,8 @@ function TransferModal({
 		} else {
 			// spinner off
 			setLoading(false);
+
+			// tell user his balance is Insufficient
 			setErrorAmount(true);
 		}
 	};

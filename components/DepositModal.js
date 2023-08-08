@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import styles from "@/styles/Content.module.scss";
@@ -19,7 +18,14 @@ const override = {
 	borderColor: "red",
 };
 
-function DepositModal({ acc_name, acc_number, balance, document, userId }) {
+function DepositModal({
+	acc_name,
+	acc_number,
+	balance,
+	document,
+	userId,
+	handleComponentReturn,
+}) {
 	// modal handles
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
@@ -30,13 +36,6 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 	// user's data
 	const [deposit, setDeposit] = useState();
 	const [description, setDescription] = useState();
-
-	const router = useRouter();
-	// router to refresh the page on demand
-
-	const refreshPage = () => {
-		router.push(router.asPath);
-	};
 
 	// handle deposit
 	const handleDeposit = async (e) => {
@@ -90,8 +89,8 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 				description,
 				newBalance
 			).then((data) => console.log(data));
-			toastSuccess(res.message); // show success message
-			refreshPage();
+
+			handleComponentReturn(res.status, res.message); // show success message
 		} else {
 			// spinner off
 			setLoading(false);
@@ -108,7 +107,7 @@ function DepositModal({ acc_name, acc_number, balance, document, userId }) {
 				newBalance
 			).then((data) => console.log(data));
 
-			toastError(res.message); //show error message
+			handleComponentReturn(res.status, res.message); //show error message
 		}
 	};
 

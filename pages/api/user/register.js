@@ -13,12 +13,6 @@ async function register(req, res) {
 	//encrypt user password
 	data.password = await hashPass(data.password);
 
-	// define account number and creation date;
-	data.acc_num = accNumGen();
-	data.created = today();
-	data.business_acc = false;
-	data.saving_acc = false;
-
 	const endpoint = `${server}/api/user/`;
 
 	let users = await fetch(endpoint, {
@@ -40,8 +34,17 @@ async function register(req, res) {
 			message: "This user already exists, log in.",
 		});
 
-	//save entries into database
-	const jsonData = JSON.stringify(data);
+	// define then send user's entries into database
+	const jsonData = JSON.stringify({
+		firstName: data.firstName,
+		lastName: data.lastName,
+		password: data.password,
+		balance: parseInt(data.balance),
+		business_acc: false,
+		saving_acc: false,
+		acc_num: accNumGen(),
+		created: today(),
+	});
 
 	const sign = await fetch(endpoint, {
 		method: "POST",

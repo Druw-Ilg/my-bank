@@ -48,6 +48,7 @@ const BusinessAcc = ({
 						balance={account.balance}
 						document={"business_doc"}
 						userId={account.user_id}
+						handleComponentReturn={handleComponentReturn}
 					/>
 					<TransferModal
 						acc_name={account.business_name}

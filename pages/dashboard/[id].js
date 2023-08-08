@@ -67,26 +67,25 @@ const Dashboard = ({ user }) => {
 
 	async function fetchBusinesses() {
 		if (user.business_acc) {
-			getBusinesses(user._id).then((data) => 
-			{if (data.status < 300) {
-				return setBusinessAccounts(data.data);
-			}else{
-				return toastError(data.message);
-
-			}}
-			);
+			getBusinesses(user._id).then((data) => {
+				if (data.status < 300) {
+					return setBusinessAccounts(data.data);
+				} else {
+					return toastError(data.message);
+				}
+			});
 		}
 	}
 
 	async function fetchSavingAcc() {
 		if (user.saving_acc) {
-			getSavingAcc(user._id).then((data) => 
-			{if (data.status < 300) {
-				return setSavingAccounts(data.data);
-			} else {
-				return toastError(data.message);
-			}}
-			);
+			getSavingAcc(user._id).then((data) => {
+				if (data.status < 300) {
+					return setSavingAccounts(data.data);
+				} else {
+					return toastError(data.message);
+				}
+			});
 		}
 	}
 	useEffect(() => {
@@ -114,8 +113,6 @@ const Dashboard = ({ user }) => {
 
 		if (addAccData.acc_type === "Business Account") {
 			postBusinessAcc(addAccData, user._id, user.business_acc).then((data) => {
-				
-
 				if (data.status === 201) {
 					toastSuccess(data.message);
 					fetchBusinesses();
@@ -125,8 +122,6 @@ const Dashboard = ({ user }) => {
 			});
 		} else if (addAccData.acc_type === "Saving Account") {
 			postSavingAcc(addAccData, user._id, user.saving_acc).then((data) => {
-				
-
 				if (data.status === 201) {
 					toastSuccess(data.message);
 					fetchSavingAcc();
@@ -158,7 +153,7 @@ const Dashboard = ({ user }) => {
 		setDescription("Enter the account name");
 	};
 
-	// toast returns from components
+	// handle component's feedback
 	const handleComponentReturn = (status, message) => {
 		if (status < 300) {
 			message
@@ -224,6 +219,7 @@ const Dashboard = ({ user }) => {
 											balance={user.balance}
 											document={"user_doc"}
 											userId={user._id}
+											handleComponentReturn={handleComponentReturn}
 										/>
 										<TransferModal
 											acc_name={"Check account"}
