@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { server } from "../utils/server";
+import { server } from "@/utils/server";
 import { useRouter } from "next/router";
-import styles from "../styles/Content.module.scss";
+import styles from "@/styles/Content.module.scss";
 import Button from "react-bootstrap/Button";
 
 const Header = ({ page }) => {
@@ -11,7 +11,7 @@ const Header = ({ page }) => {
 		const logoutUrl = `${server}/api/user/logout`;
 		const logout = await fetch(logoutUrl);
 		const res = await logout.json();
-		if (res.ok) router.push("/");
+		if (res.ok) router.push(`${server}`);
 	};
 	return (
 		<div className={styles.header}>
