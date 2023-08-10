@@ -2,12 +2,14 @@
 
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 
+const dev = process.env.NODE_ENV !== "production";
+
 const sessionOptions = {
 	password: process.env.SESSION_PASSWORD,
 	cookieName: "myBankSession",
 	// secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
 	cookieOptions: {
-		secure: process.env.NODE_ENV === "development",
+		secure: dev ? process.env.NODE_ENV === "development" : true,
 	},
 };
 
